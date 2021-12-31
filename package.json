@@ -1,6 +1,10 @@
 {
   "name": "biller",
+<<<<<<< HEAD
   "homepage": "http://www.billerdev.ng",
+=======
+  "homepage": "http://billerdev.ng",
+>>>>>>> f6fa227f1b32615b0e7df8cd0ed2e8696afb1493
   "version": "0.1.0",
   "private": true,
   "dependencies": {
