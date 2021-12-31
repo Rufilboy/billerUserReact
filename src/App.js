@@ -20,7 +20,7 @@ import { Route, Switch } from 'react-router-dom';
 function App() {
   return (
     <div className="font-Montserrat md:max-w-full max-w-sm">
-      <Route  path="/login" >
+      <Route exact path="/" >
         <Login />
       </Route>
       <Route path="/airtime">

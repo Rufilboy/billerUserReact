@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import smallIcon from "../icon/smallIcon.svg";
+import {useForm } from 'react-hook-form'
 import eye2 from "../icon/eye2.svg";
 
 function SignUp() {
+  const [pwdType, setPwdType] = useState('password')
+
+const{register, handleSubmit,}=useForm()
+
+const changetype=()=>{
+  pwdType === 'password'? setPwdType('text'): setPwdType('password')
+}
+  
+  
+  
   return (
     <div className="grid place-content-center  bg-secondary-blue">
       <div className="max-w-sm flex flex-col items-center justify-center my-8 p-5 md:p-0">
@@ -53,7 +64,7 @@ function SignUp() {
                 Password
                 <div className=" relative  w-full">
                   <input
-                    type="password"
+                    type={pwdType}
                     className="create-input"
                     placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                     style={{ transition: "all .15s ease" }}
@@ -63,6 +74,10 @@ function SignUp() {
                       src={eye2}
                       alt="eye"
                       className="text-secondary-gray "
+                      onClick={() => {changetype()
+                      console.log(pwdType);
+                      
+                      }}
                     />
                   </div>
                 </div>
