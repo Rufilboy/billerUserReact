@@ -1,18 +1,37 @@
 import React, { useState } from "react";
 import smallIcon from "../icon/smallIcon.svg";
 import {useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup';
+import {validationSchema} from '../components/validation'
 import eye2 from "../icon/eye2.svg";
 
-function SignUp() {
+
+type profile={
+  fullName:string,
+  email:string | number,
+  phoneNumber:number,
+  password:string,
+  confirmPassword:any
+}
+
+
+const  SignUp: React.FC = ()=> {
   const [pwdType, setPwdType] = useState('password')
 
-const{register, handleSubmit,}=useForm()
+  const { register, handleSubmit, watch, formState: { errors } } = useForm <profile>({
+    resolver: yupResolver(validationSchema)
+  });
 
 const changetype=()=>{
   pwdType === 'password'? setPwdType('text'): setPwdType('password')
 }
+const onSubmit = (data: profile) => {
+  console.log(data);
   
-  
+};
+
+
+// const onSubmit = data => console.log(data);
   
   return (
     <div className="grid place-content-center  bg-secondary-blue">
@@ -24,7 +43,7 @@ const changetype=()=>{
           <h3 className="md:text-2xl text-lg font-medium text-left text-primary-blue">
             Sign up
           </h3>
-          <form className="">
+          <form  onSubmit={handleSubmit(onSubmit)} >
             <div className="relative w-full ">
               {/* <label className="block  text-black text-base font-medium mb-3.5 mt-9">
                 User Type
@@ -40,16 +59,20 @@ const changetype=()=>{
                   className="create-input"
                   style={{ transition: "all .15s ease" }}
                   placeholder="John Doe"
+                  {...register("fullName")}
                 />
+                 <div className="text-red-500 mt-5">{errors.fullName?.message}</div>
               </label>
               <label className="block  text-secondary-black md:text-base text-sm font-medium mt-4">
                 Email Address
                 <input
-                  type="text"
+                   type="email"
                   className=" create-input"
                   placeholder="example@mail.com"
                   style={{ transition: "all .15s ease" }}
+                 {...register("email")}
                 />
+                <div className="text-red-500 mt-5">{errors.email?.message}</div>
               </label>
               <label className="block  text-secondary-black md:text-base text-sm font-medium mt-4">
                 Phone Number
@@ -58,7 +81,9 @@ const changetype=()=>{
                   className="create-input"
                   style={{ transition: "all .15s ease" }}
                   placeholder="Eg 08012345678"
+                  {...register("phoneNumber")}
                 />
+                 <div className="text-red-500">{errors.phoneNumber?.message}</div>
               </label>
               <label className="block  text-secondary-black md:text-base text-sm font-medium mt-4">
                 Password
@@ -68,7 +93,9 @@ const changetype=()=>{
                     className="create-input"
                     placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                     style={{ transition: "all .15s ease" }}
+                    {...register("password")}
                   />
+                 
                   <div className="abso">
                     <img
                       src={eye2}
@@ -81,25 +108,35 @@ const changetype=()=>{
                     />
                   </div>
                 </div>
+                <div className="text-red-500">{errors.password?.message}</div>
               </label>
 
               <label className="block  text-secondary-black md:text-base text-sm font-medium mt-4">
                 Confirm Password
                 <div className=" relative  w-full">
                   <input
-                    type="password"
+                    type={pwdType}
                     className="create-input"
                     placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                     style={{ transition: "all .15s ease" }}
+                    {...register("confirmPassword")}
                   />
+
                   <div className="abso">
                     <img
                       src={eye2}
                       alt="eye"
                       className="text-secondary-gray "
+                      onClick={() => {changetype()
+                        console.log(pwdType);
+                        
+                        }}
                     />
                   </div>
                 </div>
+                <div className="text-red-500">
+            {errors.confirmPassword?.message}
+          </div>
               </label>
 
               <div className="flex w-full mt-12">

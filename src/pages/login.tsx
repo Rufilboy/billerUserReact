@@ -1,7 +1,33 @@
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import {validationSchemaLogin} from '../components/validation'
+
 import eye2 from "../icon/eye2.svg";
 import smallIcon from "../icon/smallIcon.svg";
+import { useState } from "react";
 
-function login() {
+type profile={
+  email:string | number,
+  password:string,
+}
+
+const Login:React.FC=() =>{
+  const [pwdType, setPwdType] = useState('password')
+
+  const { register, handleSubmit, watch, formState: { errors } } = useForm <profile>({
+    resolver: yupResolver(validationSchemaLogin)
+  });
+
+const changetype=()=>{
+  pwdType === 'password'? setPwdType('text'): setPwdType('password')
+}
+const onSubmit = (data: profile) => {
+  console.log(data);
+  
+};
+console.log(errors);
+
+  
   return (
     <div className="grid place-content-center  bg-secondary-blue">
       <div className="max-w-sm flex flex-col items-center justify-center my-8 p-5 md:p-0">
@@ -12,7 +38,7 @@ function login() {
           <h3 className="md:text-2xl text-lg font-medium text-left text-primary-blue">
             Log in
           </h3>
-          <form className="">
+          <form className="" onSubmit={handleSubmit(onSubmit)}>
             <div className="relative w-full ">
               <label className="block  text-secondary-black text-base  font-medium mb-3.5 mt-9">
                 Email address/Phone number
@@ -21,25 +47,32 @@ function login() {
                   className=" create-input"
                   style={{ transition: "all .15s ease" }}
                   placeholder="example@mail.com"
+                  {...register("email")}
                 />
+              <div className="text-red-500 mt-2 text-sm">{errors.email?.message}</div>
               </label>
               <label className="block  text-secondary-black text-base font-medium mt-4">
                 Password
                 <div className=" relative  w-full">
                   <input
-                    type="password"
+                    type={pwdType}
                     className="create-input"
                     placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                     style={{ transition: "all .15s ease" }}
+                    {...register("password")}
                   />
                   <div className="abso">
                     <img
                       src={eye2}
                       alt="eye"
                       className="text-secondary-gray "
+                      onClick={() => {
+                        changetype()
+                      }}
                     />
                   </div>
                 </div>
+                <div className="text-red-500 mt-2 text-sm">{errors.password?.message}</div>
               </label>
 
               <div className="flex w-full mt-12">
@@ -67,4 +100,4 @@ function login() {
   );
 }
 
-export default login;
+export default Login;
