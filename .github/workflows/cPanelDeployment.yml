@@ -1,4 +1,4 @@
-name: 🚀 Publish Website To Cpanel
+name: 🚀 Publish Website To cPanel
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
@@ -12,6 +12,7 @@ jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action
     runs-on: ubuntu-latest
+    environment: .env.sample
     steps:
       - uses: actions/checkout@v2
         with: 
