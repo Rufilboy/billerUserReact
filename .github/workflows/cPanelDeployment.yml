@@ -21,7 +21,7 @@ jobs:
       - name: FTP-Deploy-Action
         uses: SamKirkland/FTP-Deploy-Action@4.2.0
         with:
-          server: ${{ env.FTP_SERVER }}
-          username: ${{ env.FTP_USERNAME }}
-          password: ${{ env.FTP_PASSWORD }}
+          server: ${{ environments.FTP_SERVER }}
+          username: ${{ environments.FTP_USERNAME }}
+          password: ${{ environments.FTP_PASSWORD }}
 
