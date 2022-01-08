@@ -12,7 +12,7 @@ jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action
     runs-on: ubuntu-latest
-    environment: .env.sample
+    environment: production
     steps:
       - uses: actions/checkout@v2
         with: 
