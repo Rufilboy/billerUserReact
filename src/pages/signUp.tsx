@@ -1,38 +1,47 @@
 import React, { useState } from "react";
 import smallIcon from "../icon/smallIcon.svg";
-import {useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup';
-import {validationSchema} from '../components/validation'
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { validationSchema } from "../components/validation";
+import axios from "axios";
+
 import eye2 from "../icon/eye2.svg";
 
-
-type profile={
-  fullName:string,
-  email:string | number,
-  phoneNumber:number,
-  password:string,
-  confirmPassword:any
-}
-
-
-const  SignUp: React.FC = ()=> {
-  const [pwdType, setPwdType] = useState('password')
-
-  const { register, handleSubmit, watch, formState: { errors } } = useForm <profile>({
-    resolver: yupResolver(validationSchema)
-  });
-
-const changetype=()=>{
-  pwdType === 'password'? setPwdType('text'): setPwdType('password')
-}
-const onSubmit = (data: profile) => {
-  console.log(data);
-  
+type profile = {
+  firstName: string;
+  lastName: string;
+  email: string | number;
+  phoneNumber: number;
+  password: string;
+  confirmPassword: any;
 };
 
+const SignUp: React.FC = () => {
+  const [pwdType, setPwdType] = useState("password");
 
-// const onSubmit = data => console.log(data);
-  
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<profile>({
+    resolver: yupResolver(validationSchema),
+  });
+
+  const changetype = () => {
+    pwdType === "password" ? setPwdType("text") : setPwdType("password");
+  };
+  const onSubmit = (data: profile) => {
+    console.log(data);
+    axios({
+      method: "post",
+      url: "http://api.billerdev.ng/api/user/uniqueId/register",
+      data: data,
+    });
+  };
+
+  // const onSubmit = data => console.log(data);
+
   return (
     <div className="grid place-content-center  bg-secondary-blue">
       <div className="max-w-sm flex flex-col items-center justify-center my-8 p-5 md:p-0">
@@ -43,7 +52,7 @@ const onSubmit = (data: profile) => {
           <h3 className="md:text-2xl text-lg font-medium text-left text-primary-blue">
             Sign up
           </h3>
-          <form  onSubmit={handleSubmit(onSubmit)} >
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="relative w-full ">
               {/* <label className="block  text-black text-base font-medium mb-3.5 mt-9">
                 User Type
@@ -53,24 +62,39 @@ const onSubmit = (data: profile) => {
                 />
               </label> */}
               <label className="block  text-secondary-black md:text-base text-sm font-medium mt-4">
-                Full-name
+                First-Name
                 <input
                   type="text"
                   className="create-input"
                   style={{ transition: "all .15s ease" }}
-                  placeholder="John Doe"
-                  {...register("fullName")}
+                  placeholder="John"
+                  {...register("firstName")}
                 />
-                 <div className="text-red-500 mt-5">{errors.fullName?.message}</div>
+                <div className="text-red-500 mt-5">
+                  {errors.firstName?.message}
+                </div>
+              </label>
+              <label className="block  text-secondary-black md:text-base text-sm font-medium mt-4">
+                Last-Name
+                <input
+                  type="text"
+                  className="create-input"
+                  style={{ transition: "all .15s ease" }}
+                  placeholder="Doe"
+                  {...register("lastName")}
+                />
+                <div className="text-red-500 mt-5">
+                  {errors.lastName?.message}
+                </div>
               </label>
               <label className="block  text-secondary-black md:text-base text-sm font-medium mt-4">
                 Email Address
                 <input
-                   type="email"
+                  type="email"
                   className=" create-input"
                   placeholder="example@mail.com"
                   style={{ transition: "all .15s ease" }}
-                 {...register("email")}
+                  {...register("email")}
                 />
                 <div className="text-red-500 mt-5">{errors.email?.message}</div>
               </label>
@@ -83,7 +107,9 @@ const onSubmit = (data: profile) => {
                   placeholder="Eg 08012345678"
                   {...register("phoneNumber")}
                 />
-                 <div className="text-red-500">{errors.phoneNumber?.message}</div>
+                <div className="text-red-500">
+                  {errors.phoneNumber?.message}
+                </div>
               </label>
               <label className="block  text-secondary-black md:text-base text-sm font-medium mt-4">
                 Password
@@ -95,15 +121,15 @@ const onSubmit = (data: profile) => {
                     style={{ transition: "all .15s ease" }}
                     {...register("password")}
                   />
-                 
+
                   <div className="abso">
                     <img
                       src={eye2}
                       alt="eye"
                       className="text-secondary-gray "
-                      onClick={() => {changetype()
-                      console.log(pwdType);
-                      
+                      onClick={() => {
+                        changetype();
+                        console.log(pwdType);
                       }}
                     />
                   </div>
@@ -127,16 +153,16 @@ const onSubmit = (data: profile) => {
                       src={eye2}
                       alt="eye"
                       className="text-secondary-gray "
-                      onClick={() => {changetype()
+                      onClick={() => {
+                        changetype();
                         console.log(pwdType);
-                        
-                        }}
+                      }}
                     />
                   </div>
                 </div>
                 <div className="text-red-500">
-            {errors.confirmPassword?.message}
-          </div>
+                  {errors.confirmPassword?.message}
+                </div>
               </label>
 
               <div className="flex w-full mt-12">
@@ -160,6 +186,6 @@ const onSubmit = (data: profile) => {
       </div>
     </div>
   );
-}
+};
 
 export default SignUp;

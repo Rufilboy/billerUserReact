@@ -1,33 +1,40 @@
 import { useForm } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import {validationSchemaLogin} from '../components/validation'
+import { yupResolver } from "@hookform/resolvers/yup";
+import { validationSchemaLogin } from "../components/validation";
+import axios from "axios";
 
 import eye2 from "../icon/eye2.svg";
 import smallIcon from "../icon/smallIcon.svg";
 import { useState } from "react";
 
-type profile={
-  email:string | number,
-  password:string,
-}
+type profile = {
+  email: string | number;
+  password: string;
+};
 
-const Login:React.FC=() =>{
-  const [pwdType, setPwdType] = useState('password')
+const Login: React.FC = () => {
+  const [pwdType, setPwdType] = useState("password");
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm <profile>({
-    resolver: yupResolver(validationSchemaLogin)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<profile>({
+    resolver: yupResolver(validationSchemaLogin),
   });
 
-const changetype=()=>{
-  pwdType === 'password'? setPwdType('text'): setPwdType('password')
-}
-const onSubmit = (data: profile) => {
-  console.log(data);
-  
-};
-console.log(errors);
+  const changetype = () => {
+    pwdType === "password" ? setPwdType("text") : setPwdType("password");
+  };
+  const onSubmit = (data: profile) => {
+    console.log(data);
+    axios({
+      method: "post",
+      url: "http://api.billerdev.ng/api/user/uniqueId/register",
+    });
+  };
+  console.log(errors);
 
-  
   return (
     <div className="grid place-content-center  bg-secondary-blue">
       <div className="max-w-sm flex flex-col items-center justify-center my-8 p-5 md:p-0">
@@ -49,7 +56,9 @@ console.log(errors);
                   placeholder="example@mail.com"
                   {...register("email")}
                 />
-              <div className="text-red-500 mt-2 text-sm">{errors.email?.message}</div>
+                <div className="text-red-500 mt-2 text-sm">
+                  {errors.email?.message}
+                </div>
               </label>
               <label className="block  text-secondary-black text-base font-medium mt-4">
                 Password
@@ -67,12 +76,14 @@ console.log(errors);
                       alt="eye"
                       className="text-secondary-gray "
                       onClick={() => {
-                        changetype()
+                        changetype();
                       }}
                     />
                   </div>
                 </div>
-                <div className="text-red-500 mt-2 text-sm">{errors.password?.message}</div>
+                <div className="text-red-500 mt-2 text-sm">
+                  {errors.password?.message}
+                </div>
               </label>
 
               <div className="flex w-full mt-12">
@@ -98,6 +109,6 @@ console.log(errors);
       </div>
     </div>
   );
-}
+};
 
 export default Login;
