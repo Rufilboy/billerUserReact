@@ -4,12 +4,16 @@ const Sidebercontext = createContext();
 
 export function SidebarProvider({ children }) {
   const [open, setOpen] = useState(true);
+  const [user, setUser] = useState([]);
   const memoizedValues = useMemo(
     () => ({
       open,
+      user,
+
       setOpen,
+      setUser,
     }),
-    [open]
+    [open, user],
   );
 
   return (

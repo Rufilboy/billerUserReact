@@ -28,9 +28,13 @@ const Login: React.FC = () => {
   };
   const onSubmit = (data: profile) => {
     console.log(data);
+
     axios({
       method: "post",
-      url: "http://api.billerdev.ng/api/user/uniqueId/register",
+      url: "http://api.billerdev.ng/api/user/uniqueId/login",
+      data: data,
+    }).then((response) => {
+      console.log(response);
     });
   };
   console.log(errors);

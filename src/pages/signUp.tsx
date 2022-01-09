@@ -4,8 +4,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "../components/validation";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 import eye2 from "../icon/eye2.svg";
+import { setTimeout } from "timers";
 
 type profile = {
   firstName: string;
@@ -14,11 +16,12 @@ type profile = {
   phoneNumber: number;
   password: string;
   confirmPassword: any;
+  emaqil: string;
 };
 
 const SignUp: React.FC = () => {
   const [pwdType, setPwdType] = useState("password");
-
+  let history = useHistory();
   const {
     register,
     handleSubmit,
@@ -33,10 +36,34 @@ const SignUp: React.FC = () => {
   };
   const onSubmit = (data: profile) => {
     console.log(data);
+    const {
+      confirmPassword,
+      email,
+      firstName,
+      lastName,
+      password,
+      phoneNumber,
+    } = data;
+    const newUser = {
+      email,
+      password,
+      userType: "individual",
+      avatar: "https://images.app.goo.gl/3WoJUVenwTPhCGEGA",
+      firstName,
+      lastName,
+    };
+
     axios({
       method: "post",
       url: "http://api.billerdev.ng/api/user/uniqueId/register",
-      data: data,
+      data: newUser,
+    }).then((response) => {
+      console.log(response.data);
+      if (response.status === 201) {
+        setTimeout(() => {
+          history.push("/signUpAlert");
+        }, 3000);
+      }
     });
   };
 

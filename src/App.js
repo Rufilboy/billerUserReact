@@ -11,16 +11,17 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import OtpInput from "./pages/otpInput";
 import ResetAlert from "./pages/resetAlert";
+import SignUpAlert from "./pages/signUpAlert";
 import SetPass from "./pages/setPass";
 import Settings from "./pages/settings";
 import SignUp from "./pages/signUp";
 import Splash from "./pages/splash";
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch } from "react-router-dom";
 
 function App() {
   return (
     <div className="font-Montserrat md:max-w-full max-w-sm">
-      <Route exact path="/" >
+      <Route exact path="/">
         <Login />
       </Route>
       <Route path="/airtime">
@@ -46,6 +47,9 @@ function App() {
       </Route>
       <Route path="/Settings">
         <Settings />
+      </Route>
+      <Route path="/signUpAlert">
+        <SignUpAlert />
       </Route>
     </div>
   );
