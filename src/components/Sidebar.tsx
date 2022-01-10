@@ -4,7 +4,7 @@ import document from "../icon/document-text.svg";
 import settings from "../icon/setting-2.svg";
 import calling from "../icon/call-calling.svg";
 import profile from "../icon/profile-2user.svg";
-import Sidebercontext from "../store/sidebercontext";
+import Context from "../store/context";
 import avater from "../icon/avater.svg";
 import iconwhite from "../icon/iconWhite.svg";
 import cancel from "../icon/cancel.svg";
@@ -12,7 +12,7 @@ import cancel from "../icon/cancel.svg";
 import lock from "../icon/lock.svg";
 
 function Sidebar() {
-  const { open, setOpen } = useContext(Sidebercontext);
+  const { open, setOpen, user } = useContext(Context);
   return (
     <div
       className={
@@ -38,11 +38,11 @@ function Sidebar() {
           </div>
           <div className="profile text-white  ">
             <span className="block text-sm md:text-base font-medium text-white">
-              Mark Robinson
+              {user.firstName}
             </span>
 
             <span className="block text-xx text-tetiary-brown md:text-primary-gray ">
-              User Type
+              {user.userType}
             </span>
           </div>
         </div>

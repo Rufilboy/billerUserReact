@@ -4,10 +4,11 @@ import notification from "../icon/notification.svg";
 import avater from "../icon/avater.svg";
 import arrowDown from "../icon/arrow-down.svg";
 import handbugger from "../icon/handbugger.svg";
-import Sidebercontext from "../store/sidebercontext";
+import Context from "../store/context";
 
 function Header() {
-  const { open, setOpen } = useContext(Sidebercontext);
+  const { open, setOpen, user } = useContext(Context);
+  console.log(user);
 
   return (
     <div className="bg-white flex items-center px-5 justify-between py-3.5 md:py-0">
@@ -30,14 +31,16 @@ function Header() {
         </div>
         <div className="avatar py-2.5 px-5 rounded-lg  md:flex justify-between items-center ml-10 hidden ">
           <div className="">
-            <img src={avater} alt="avater" />
+            <img src={user.avatr || avater} alt="avater" />
           </div>
           <div className="profile text-white  ml-3.5">
             <span className="block text-base font-medium text-primary-blue">
-              Mark Robinson
+              {user.firstName} {user.lastName}
             </span>
 
-            <span className="block text-xx text-primary-gray ">User Type</span>
+            <span className="block text-xx text-primary-gray ">
+              {user.userType}
+            </span>
           </div>
 
           <img src={arrowDown} alt="arrow" className="ml-7" />

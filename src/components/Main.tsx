@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import eye from "../icon/eye.svg";
 import add from "../icon/add.svg";
 import atm from "../icon/atm.svg";
@@ -6,9 +6,16 @@ import device from "../icon/device.svg";
 import wifi from "../icon/wifi.svg";
 import electricitylogo from "../icon/electricitylogo.svg";
 import tvlogo from "../icon/tvlogo.svg";
+import Context from "../store/context";
 
 function Main() {
   const [showComplete, setshowComplete] = useState(false);
+  const [showAccBal, setshowAccBal] = useState(true);
+  const { open, setOpen, user } = useContext(Context);
+  const showBalance = () => {
+    setshowAccBal(!showAccBal);
+  };
+
   return (
     <div className="main h-full w-full bg-secondary-blue px-4 md:pl-10 md:pr-16 py-6">
       <div className=" rounded-lg ">
@@ -17,7 +24,7 @@ function Main() {
             Dashboard
           </div>
           <div className="font-medium text-sm md:text-xs text-primary-gray mt-0.5 mb-6">
-            Welcome back, Mark!
+            Welcome back, {user.firstName}
           </div>
         </div>
 
@@ -29,14 +36,14 @@ function Main() {
         >
           <div className="flex justify-between items-center bg-primary-blue md:p-7 p-2.5 md:divide-x divide-y md:divide-y-0 divide-primary-gray flex-col md:flex-row ">
             <div className="w-full md:w-auto px-2">
-              <div className="flex justify-between items-center px-2 pb-4  ">
+              <div className="flex justify-between items-center px-2 pb-4  w-80 ">
                 <span className="text-xs font-medium text-white ">
                   Current Wallet balance
                 </span>
-                <img src={eye} alt="eye" />
+                <img src={eye} alt="eye" onClick={() => showBalance()} />
               </div>
               <p className="text-2xl mb-3 md:mb-0 md:text-4xl text-white font-medium px-2">
-                N1,300,000.00
+                {showAccBal ? `₦ ${user.wallet_balance}` : "xx.xx.xx"}
               </p>
             </div>
 

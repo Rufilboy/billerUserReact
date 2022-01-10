@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchemaLogin } from "../components/validation";
+import Sidebercontext from "../store/context";
 import axios from "axios";
 
 import eye2 from "../icon/eye2.svg";
 import smallIcon from "../icon/smallIcon.svg";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 type profile = {
   email: string | number;
@@ -14,7 +15,7 @@ type profile = {
 
 const Login: React.FC = () => {
   const [pwdType, setPwdType] = useState("password");
-
+  const { user, handleLogin } = useContext(Sidebercontext);
   const {
     register,
     handleSubmit,
@@ -27,14 +28,18 @@ const Login: React.FC = () => {
     pwdType === "password" ? setPwdType("text") : setPwdType("password");
   };
   const onSubmit = (data: profile) => {
-    console.log(data);
+    console.log(`"formdata:" ${data}`);
 
     axios({
       method: "post",
       url: "http://api.billerdev.ng/api/user/uniqueId/login",
       data: data,
     }).then((response) => {
-      console.log(response);
+      const token = response.data.token;
+      const user = response.data.user;
+      console.log(response.data.token);
+      console.log(response.data.user);
+      handleLogin(user, token);
     });
   };
   console.log(errors);
