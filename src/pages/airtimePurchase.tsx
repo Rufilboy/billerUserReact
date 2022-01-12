@@ -4,7 +4,10 @@ import eye from "../icon/eye.svg";
 import add from "../icon/add.svg";
 import atm from "../icon/atm.svg";
 import rightArrow from "../icon/rightArrow.svg";
+import { useHistory } from "react-router-dom";
+
 function AirtimePurchase() {
+  const history = useHistory();
   return (
     <div>
       <div className="grid maincolumns ">
@@ -18,7 +21,12 @@ function AirtimePurchase() {
           </div>
           <div className="">
             <div className="main h-full w-full bg-secondary-blue px-5  md:pl-10 md:pr-16 py-4">
-              <div className="flex space-x-2 mb-7 md:hidden">
+              <div
+                className="flex space-x-2 mb-7 md:hidden"
+                onClick={() => {
+                  history.push("/");
+                }}
+              >
                 <img src={rightArrow} alt="back" />
                 <p className="text-xs text-primary-blue">Back to Dashboard</p>
               </div>

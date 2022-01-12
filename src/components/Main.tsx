@@ -7,6 +7,7 @@ import wifi from "../icon/wifi.svg";
 import electricitylogo from "../icon/electricitylogo.svg";
 import tvlogo from "../icon/tvlogo.svg";
 import Context from "../store/context";
+import { useHistory } from "react-router-dom";
 
 function Main() {
   const [showComplete, setshowComplete] = useState(false);
@@ -15,6 +16,7 @@ function Main() {
   const showBalance = () => {
     setshowAccBal(!showAccBal);
   };
+  const history = useHistory();
 
   return (
     <div className="main h-full w-full bg-secondary-blue px-4 md:pl-10 md:pr-16 py-6">
@@ -106,7 +108,10 @@ function Main() {
           Available Services
         </h2>
 
-        <div className=" md:flex grid grid-cols-2 gap-3 md:justify-between md:flex-wraps    items-centers  w-full pt-8 ">
+        <div
+          className=" md:flex grid grid-cols-2 gap-3 md:justify-between md:flex-wraps    items-centers  w-full pt-8 "
+          onClick={() => history.push("/airtime")}
+        >
           <div className=" shadow-lg rounded-lg bg-white pl-6  md:pr-24 md:py-5 pt-5 pb-3.5 pr-11">
             <img
               src={device}

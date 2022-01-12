@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import smallIcon from "../icon/smallIcon.svg";
+import loading from "../icon/loading.svg";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "../components/validation";
@@ -11,7 +12,6 @@ import { setTimeout } from "timers";
 
 type profile = {
   firstName: string;
-  lastName: string;
   email: string | number;
   phoneNumber: number;
   password: string;
@@ -25,7 +25,7 @@ const SignUp: React.FC = () => {
   const {
     register,
     handleSubmit,
-    watch,
+
     formState: { errors },
   } = useForm<profile>({
     resolver: yupResolver(validationSchema),
@@ -36,21 +36,13 @@ const SignUp: React.FC = () => {
   };
   const onSubmit = (data: profile) => {
     console.log(data);
-    const {
-      confirmPassword,
-      email,
-      firstName,
-      lastName,
-      password,
-      phoneNumber,
-    } = data;
+    const { confirmPassword, email, firstName, password, phoneNumber } = data;
     const newUser = {
       email,
       password,
       userType: "individual",
       avatar: "https://images.app.goo.gl/3WoJUVenwTPhCGEGA",
       firstName,
-      lastName,
     };
 
     axios({
@@ -89,7 +81,7 @@ const SignUp: React.FC = () => {
                 />
               </label> */}
               <label className="block  text-secondary-black md:text-base text-sm font-medium mt-4">
-                First-Name
+                Full-Name
                 <input
                   type="text"
                   className="create-input"
@@ -101,19 +93,7 @@ const SignUp: React.FC = () => {
                   {errors.firstName?.message}
                 </div>
               </label>
-              <label className="block  text-secondary-black md:text-base text-sm font-medium mt-4">
-                Last-Name
-                <input
-                  type="text"
-                  className="create-input"
-                  style={{ transition: "all .15s ease" }}
-                  placeholder="Doe"
-                  {...register("lastName")}
-                />
-                <div className="text-red-500 mt-5">
-                  {errors.lastName?.message}
-                </div>
-              </label>
+
               <label className="block  text-secondary-black md:text-base text-sm font-medium mt-4">
                 Email Address
                 <input
@@ -192,12 +172,18 @@ const SignUp: React.FC = () => {
                 </div>
               </label>
 
-              <div className="flex w-full mt-12">
-                <button
+              <div className="flex w-full mt-12 ">
+                {/* <button
                   type="submit"
                   className="py-2 px-4 bg-primary-blue  active:bg-yellow-100 active:ring-primary-orange text-white w-full transition ease-in duration-200 text-center md:text-base text-sm font-semibold shadow-md rounded-lg "
                 >
                   Submit
+                </button> */}
+                <button
+                  type="submit"
+                  className=" px-4 bg-white  active:bg-yellow-100 active:ring-primary-orange text-white w-full transition ease-in duration-200 text-center md:text-base text-sm font-semibold shadow-md rounded-lg "
+                >
+                  <img src={loading} alt="" className="" />
                 </button>
               </div>
               <div className=" flex items-center justify-center flex-col divide-y divide-opacity-20 divide-secondary-gray w-full mt-10">

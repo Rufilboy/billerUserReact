@@ -7,6 +7,7 @@ import axios from "axios";
 import eye2 from "../icon/eye2.svg";
 import smallIcon from "../icon/smallIcon.svg";
 import { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 type profile = {
   email: string | number;
@@ -40,8 +41,10 @@ const Login: React.FC = () => {
       console.log(response.data.token);
       console.log(response.data.user);
       handleLogin(user, token);
+      history.push("/dashbourd");
     });
   };
+  const history = useHistory();
   console.log(errors);
 
   return (
