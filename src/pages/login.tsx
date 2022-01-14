@@ -33,7 +33,7 @@ const Login: React.FC = () => {
 
     axios({
       method: "post",
-      url: "http://api.billerdev.ng/api/user/uniqueId/login",
+      url: "https://api.billerdev.ng/api/user/uniqueId/login",
       data: data,
     }).then((response) => {
       const token = response.data.token;
@@ -63,7 +63,7 @@ const Login: React.FC = () => {
                 Email address/Phone number
                 <input
                   type="text"
-                  className=" create-input"
+                  className="create-input"
                   style={{ transition: "all .15s ease" }}
                   placeholder="example@mail.com"
                   {...register("email")}

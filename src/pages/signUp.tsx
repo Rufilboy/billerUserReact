@@ -16,7 +16,6 @@ type profile = {
   phoneNumber: number;
   password: string;
   confirmPassword: any;
-  emaqil: string;
 };
 
 const SignUp: React.FC = () => {

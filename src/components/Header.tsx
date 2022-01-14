@@ -6,6 +6,8 @@ import arrowDown from "../icon/arrow-down.svg";
 import handbugger from "../icon/handbugger.svg";
 import Context from "../store/context";
 
+type data = {};
+
 function Header() {
   const { open, setOpen, user } = useContext(Context);
   console.log(user);

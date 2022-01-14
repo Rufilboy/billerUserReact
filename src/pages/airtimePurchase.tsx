@@ -5,9 +5,37 @@ import add from "../icon/add.svg";
 import atm from "../icon/atm.svg";
 import rightArrow from "../icon/rightArrow.svg";
 import { useHistory } from "react-router-dom";
+import { useContext, useState } from "react";
+import { validationAirtimePuchase } from "../components/validation";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Context from "../store/context";
+import PaymentModel from "../components/PaymentMethod";
 
-function AirtimePurchase() {
+type profile = {
+  network: string;
+  phoneNumber: number;
+  amount: number;
+};
+const AirtimePurchase: React.FC = () => {
+  const { open, setOpen, user, token, formData, formDispatch } =
+    useContext(Context);
+  const [showAccBal, setshowAccBal] = useState(true);
+
+  console.log(user);
+  console.log(token);
+  const showBalance = () => {
+    setshowAccBal(!showAccBal);
+  };
   const history = useHistory();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<profile>({
+    resolver: yupResolver(validationAirtimePuchase),
+  });
+
   return (
     <div>
       <div className="grid maincolumns ">
@@ -43,13 +71,13 @@ function AirtimePurchase() {
                 <div className=" rounded-lg flex justify-between items-center w-8-12 bg-primary-blue  md:px-8 py-1.5 md:divide-x divide-y md:divide-y-0 divide-primary-gray flex-col md:flex-row ">
                   <div className="w-full md:w-auto px-2">
                     <div className="flex justify-between items-center md:px-2 md:pb-4  ">
-                      <span className="text-xx md:text-xs font-medium text-white">
+                      <span className="text-xx md:text-xs font-medium text-white w-80">
                         Current Wallet balance
                       </span>
-                      <img src={eye} alt="eye" />
+                      <img src={eye} alt="eye" onClick={() => showBalance()} />
                     </div>
                     <p className=" text-lg md:text-4xl text-white font-medium ">
-                      N1,300,000.00
+                      {showAccBal ? `₦ ${user.wallet_balance}` : "xx.xx.xx"}
                     </p>
                   </div>
 
@@ -95,12 +123,17 @@ function AirtimePurchase() {
                       >
                         Select Network
                       </label>
-                      <input
-                        type="select"
-                        id="search-form-price"
+                      <select
                         className=" mt-2.5 rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-2 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-primary-placeHolder shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
                         placeholder="Eg. MTN "
-                      />
+                        {...register("network")}
+                      >
+                        <option> </option>
+                        <option value="MTN">MTN</option>
+                        <option value="GLO">GLO</option>
+                        <option value="AIRTELL">AIRTELL</option>
+                        <option value="9MOBILE">9MOBILE</option>
+                      </select>
                     </div>
                   </div>
                   <div className="w-full">
@@ -140,6 +173,9 @@ function AirtimePurchase() {
                       <button
                         type="button"
                         className="py-2 px-2 md:py-3.5 md:px-4  bg-primary-blue hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-sm md:text-base font-medium shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                        onClick={() => {
+                          <PaymentModel />;
+                        }}
                       >
                         Proceed to Pay
                       </button>
@@ -153,6 +189,6 @@ function AirtimePurchase() {
       </div>
     </div>
   );
-}
+};
 
 export default AirtimePurchase;
