@@ -169,17 +169,7 @@ const AirtimePurchase: React.FC = () => {
                     </div>
                   </div>
                   <div>
-                    <span className="block w-full rounded-md shadow-sm mt-12">
-                      <button
-                        type="button"
-                        className="py-2 px-2 md:py-3.5 md:px-4  bg-primary-blue hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-sm md:text-base font-medium shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                        onClick={() => {
-                          <PaymentModel />;
-                        }}
-                      >
-                        Proceed to Pay
-                      </button>
-                    </span>
+                    <PaymentModel />
                   </div>
                 </form>
               </div>

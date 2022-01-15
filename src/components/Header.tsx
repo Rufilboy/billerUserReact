@@ -33,11 +33,11 @@ function Header() {
         </div>
         <div className="avatar py-2.5 px-5 rounded-lg  md:flex justify-between items-center ml-10 hidden ">
           <div className="">
-            <img src={user.avatr || avater} alt="avater" />
+            <img src={avater} alt="avater" />
           </div>
           <div className="profile text-white  ml-3.5">
             <span className="block text-base font-medium text-primary-blue">
-              {user.firstName} {user.lastName}
+              {user.firstName} || {user.lastName}
             </span>
 
             <span className="block text-xx text-primary-gray ">
