@@ -21,9 +21,9 @@ const Splash = React.lazy(() => import("./pages/splash"));
 
 function App() {
   return (
-    <div className="font-Montserrat md:max-w-full max-w-sm">
+    <div className="font-Montserrat w-full ">
       <Suspense fallback={<Loading />}>
-        <Route path="/signIn">
+        <Route path="/" exact>
           <Login />
         </Route>
         <Route path="/airtime">
@@ -44,7 +44,7 @@ function App() {
         <Route path="/forget">
           <ForgetPass />
         </Route>
-        <Route exact path="/">
+        <Route exact path="/home">
           <Home />
         </Route>
         <Route path="/Settings">

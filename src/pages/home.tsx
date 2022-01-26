@@ -5,7 +5,7 @@ import Sidebar from "../components/Sidebar";
 
 function Home() {
   return (
-    <div className="grid maincolumns  ">
+    <div className="grid maincolumns ">
       <div className="col-span-12">
         <Header />
       </div>

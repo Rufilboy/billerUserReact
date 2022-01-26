@@ -41,7 +41,7 @@ const Login: React.FC = () => {
       console.log(response.data.token);
       console.log(response.data.user);
       handleLogin(user, token);
-      history.push("/");
+      history.push("/home");
     });
   };
   const history = useHistory();
