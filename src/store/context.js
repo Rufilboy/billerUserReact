@@ -17,7 +17,7 @@ export function Provider({ children }) {
     setToken(token);
   };
 
-  const memoizedValues = useMemo(
+  const memorizedValues = useMemo(
     () => ({
       open,
       user,
@@ -32,7 +32,9 @@ export function Provider({ children }) {
     [open, user, formData],
   );
 
-  return <Context.Provider value={memoizedValues}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={memorizedValues}>{children}</Context.Provider>
+  );
 }
 
 export default Context;
