@@ -7,7 +7,7 @@ import wifi from "../icon/wifi.svg";
 import electricitylogo from "../icon/electricitylogo.svg";
 import tvlogo from "../icon/tvlogo.svg";
 import Context from "../store/context";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 function Main() {
   const [showComplete, setshowComplete] = useState(false);
@@ -108,50 +108,59 @@ function Main() {
           Available Services
         </h2>
 
-        <div
-          className=" md:flex grid grid-cols-2 gap-3 md:justify-between md:flex-wraps    items-centers  w-full pt-8 "
-          onClick={() => history.push("/airtime")}
-        >
-          <div className=" shadow-lg rounded-lg bg-white pl-6  md:pr-24 md:py-5 pt-5 pb-3.5 pr-11">
-            <img
-              src={device}
-              alt="device"
-              className="md:h-16 md:w-16 h-11 w-11 "
-            />
-            <div className="flex flex-col   text-sm md:text-base font-medium text-primary-gray mt-5">
-              <span className="block">Airtime</span>
-              <span className="block ">Purchase</span>
+        <div className=" md:flex grid grid-cols-2 gap-3 md:justify-between md:flex-wraps    items-centers  w-full pt-8 ">
+          <Link className="" to="/airtime">
+            <div className=" shadow-lg rounded-lg bg-white pl-6  md:pr-24 md:py-5 pt-5 pb-3.5 pr-11">
+              <img
+                src={device}
+                alt="device"
+                className="md:h-16 md:w-16 h-11 w-11 "
+              />
+              <div className="flex flex-col   text-sm md:text-base font-medium text-primary-gray mt-5">
+                <span className="block">Airtime</span>
+                <span className="block ">Purchase</span>
+              </div>
             </div>
-          </div>
-          <div className=" shadow-lg rounded-lg bg-white pl-6  md:pr-24 md:py-5 pt-5 pb-3.5 pr-11">
-            <img src={wifi} alt="wifi" className="md:h-16 md:w-16 h-11 w-11 " />
-            <div className="flex flex-col   text-sm md:text-base font-medium text-primary-gray mt-5">
-              <span className="block">Data</span>
-              <span className="block ">Purchase</span>
+          </Link>
+          <Link to="/data">
+            <div className=" shadow-lg rounded-lg bg-white pl-6  md:pr-24 md:py-5 pt-5 pb-3.5 pr-11">
+              <img
+                src={wifi}
+                alt="wifi"
+                className="md:h-16 md:w-16 h-11 w-11 "
+              />
+              <div className="flex flex-col   text-sm md:text-base font-medium text-primary-gray mt-5">
+                <span className="block">Data</span>
+                <span className="block ">Purchase</span>
+              </div>
             </div>
-          </div>
-          <div className=" shadow-lg rounded-lg bg-white pl-6  md:pr-24 md:py-5 pt-5 pb-3.5 pr-11">
-            <img
-              src={electricitylogo}
-              alt="electricitylogo"
-              className="md:h-16 md:w-16 h-11 w-11 "
-            />
-            <div className="flex flex-col  text-sm md:text-base font-medium text-primary-gray mt-5">
-              <span className="block">Electricity</span>
-              <span className="block ">Purchase</span>
+          </Link>
+          <Link to="/electricity">
+            <div className=" shadow-lg rounded-lg bg-white pl-6  md:pr-24 md:py-5 pt-5 pb-3.5 pr-11">
+              <img
+                src={electricitylogo}
+                alt="electricitylogo"
+                className="md:h-16 md:w-16 h-11 w-11 "
+              />
+              <div className="flex flex-col  text-sm md:text-base font-medium text-primary-gray mt-5">
+                <span className="block">Electricity</span>
+                <span className="block ">Purchase</span>
+              </div>
             </div>
-          </div>
-          <div className=" shadow-lg rounded-lg bg-white pl-6  md:pr-24 md:py-5 pt-5 pb-3.5 pr-11">
-            <img
-              src={tvlogo}
-              alt="tvlogo"
-              className="md:h-16 md:w-16 h-11 w-11 "
-            />
-            <div className="flex flex-col   text-sm md:text-base font-medium text-primary-gray mt-5">
-              <span className="block">Cable TV</span>
-              <span className="block ">Purchase</span>
+          </Link>
+          <Link to="/cable">
+            <div className=" shadow-lg rounded-lg bg-white pl-6  md:pr-24 md:py-5 pt-5 pb-3.5 pr-11">
+              <img
+                src={tvlogo}
+                alt="tvlogo"
+                className="md:h-16 md:w-16 h-11 w-11 "
+              />
+              <div className="flex flex-col   text-sm md:text-base font-medium text-primary-gray mt-5">
+                <span className="block">Cable TV</span>
+                <span className="block ">Purchase</span>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

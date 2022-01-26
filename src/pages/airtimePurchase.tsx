@@ -1,13 +1,91 @@
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import eye from "../icon/eye.svg";
-import add from "../icon/add.svg";
-import atm from "../icon/atm.svg";
 import rightArrow from "../icon/rightArrow.svg";
 import { useHistory } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { validationAirtimePuchase } from "../components/validation";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Context from "../store/context";
+import PaymentMethodModal from "../components/PaymentMethod";
+import axios from "axios";
+import { getOS } from "../helpers/getOS";
+import BalanceDisplay from "../components/BalanceDisplay";
 
-function AirtimePurchase() {
+interface profile {
+  network: string;
+  phoneNumber: number;
+  amount: number;
+}
+
+const AirtimePurchase: React.FC = () => {
+  const { open, setOpen, user, token, formData, formDispatch } =
+    useContext(Context);
+  const [showAccBal, setshowAccBal] = useState(true);
+  const formOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    formDispatch({
+      type: "SET_FORM_DATA",
+      data: { name: event.target.name, value: event.target.value },
+    });
+
+    console.log(formData.phone_number);
+  };
+  const formOnSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    formDispatch({
+      type: "SET_FORM_DATA",
+      data: { name: event.target.name, value: event.target.value },
+    });
+
+    console.log(formData.phone_number);
+  };
+  console.log(user);
+  console.log(token);
+  console.log(formData);
+  const showBalance = () => {
+    setshowAccBal(!showAccBal);
+  };
   const history = useHistory();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<profile>({
+    resolver: yupResolver(validationAirtimePuchase),
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
+
+  const GetSubmited = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    console.log(`"formdata:" ${formData}`);
+    const data = {
+      email: user.email,
+      network: formData.network,
+      name: user.firstName,
+      source: getOS(),
+      password: formData.password,
+      phoneNumber: formData.phone_number,
+      amount: formData.amount,
+    };
+    console.log(data);
+    axios({
+      method: "post",
+      url: "https://api.billerdev.ng/api/user/uniqueId/walletAirtimePurchase",
+      data: data,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    console.log(formData);
+
+    console.log(errors);
+  }, [errors]);
   return (
     <div>
       <div className="grid maincolumns ">
@@ -39,50 +117,8 @@ function AirtimePurchase() {
                     Purchase your airtime
                   </div>
                 </div>
-
-                <div className=" rounded-lg flex justify-between items-center w-8-12 bg-primary-blue  md:px-8 py-1.5 md:divide-x divide-y md:divide-y-0 divide-primary-gray flex-col md:flex-row ">
-                  <div className="w-full md:w-auto px-2">
-                    <div className="flex justify-between items-center md:px-2 md:pb-4  ">
-                      <span className="text-xx md:text-xs font-medium text-white">
-                        Current Wallet balance
-                      </span>
-                      <img src={eye} alt="eye" />
-                    </div>
-                    <p className=" text-lg md:text-4xl text-white font-medium ">
-                      N1,300,000.00
-                    </p>
-                  </div>
-
-                  <div className="fund flex flex-col md:pl-8 ">
-                    <p className="font-medium text-white text-xs mb-1 pt-1 md:pt-0">
-                      Funding Options
-                    </p>
-                    <div className=" flex space-x-6">
-                      <button className="bg-white flex justify-center items-center rounded-lg py-3 px-5">
-                        <img
-                          src={add}
-                          alt="add"
-                          className="h-7 w-7  md:h-10 md:w-10"
-                        />
-                        <p className=" text-xx  md:text-sm font-medium text-primary-blue  ml-3 ">
-                          Fund with Monnify
-                        </p>
-                      </button>
-                      <button className="bg-white flex justify-center items-center rounded-lg  py-3 px-5">
-                        <img
-                          src={atm}
-                          alt="atm"
-                          className="h-7 w-7 md:h-10 md:w-10"
-                        />
-                        <p className="text-xx  md:text-sm font-medium text-primary-blue ml-3 ">
-                          Fund with ATM
-                        </p>
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
-
+              <BalanceDisplay />
               <div className="services pt-5   rounded-lg ">
                 <div className="w-full border-t border-primary-gray border-opacity-20"></div>
 
@@ -95,12 +131,22 @@ function AirtimePurchase() {
                       >
                         Select Network
                       </label>
-                      <input
-                        type="select"
-                        id="search-form-price"
+                      <select
                         className=" mt-2.5 rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-2 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-primary-placeHolder shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
                         placeholder="Eg. MTN "
-                      />
+                        {...register("network")}
+                        name="network"
+                        value={formData.network}
+                        onChange={formOnSelect}
+                      >
+                        <option> </option>
+                        <option value="MTN">MTN</option>
+                        <option value="GLO">GLO</option>
+                        <option value="AIRTELL">AIRTELL</option>
+                        <option value="9MOBILE">9MOBILE</option>
+                      </select>
+                      {errors.network?.message}
+                      {console.log(errors)}
                     </div>
                   </div>
                   <div className="w-full">
@@ -112,10 +158,12 @@ function AirtimePurchase() {
                         Phone Number
                       </label>
                       <input
-                        type="select"
-                        id="search-form-price"
+                        type="tel"
                         className=" mt-2.5 rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-2 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-primary-placeHolder shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
                         placeholder="Eg. 08146564876976"
+                        name="phone_number"
+                        value={formData.phone_number}
+                        onChange={formOnChange}
                       />
                     </div>
                   </div>
@@ -128,22 +176,18 @@ function AirtimePurchase() {
                         Amount
                       </label>
                       <input
-                        type="select"
-                        id="search-form-price"
+                        type="number"
+                        id=""
                         className=" mt-2.5 rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-2 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-primary-placeHolder shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
                         placeholder="Eg. N2,000"
+                        name="amount"
+                        value={formData.amount}
+                        onChange={formOnChange}
                       />
                     </div>
                   </div>
                   <div>
-                    <span className="block w-full rounded-md shadow-sm mt-12">
-                      <button
-                        type="button"
-                        className="py-2 px-2 md:py-3.5 md:px-4  bg-primary-blue hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-sm md:text-base font-medium shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                      >
-                        Proceed to Pay
-                      </button>
-                    </span>
+                    <PaymentMethodModal onSubmit={GetSubmited} />
                   </div>
                 </form>
               </div>
@@ -153,6 +197,6 @@ function AirtimePurchase() {
       </div>
     </div>
   );
-}
+};
 
 export default AirtimePurchase;

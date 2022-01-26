@@ -21,3 +21,9 @@ export const validationSchemaLogin = Yup.object().shape({
     .min(6, "Password must be at least 6 characters")
     .max(40, "Password must not exceed 40 characters"),
 });
+
+export const validationAirtimePuchase = Yup.object().shape({
+  network: Yup.string().required("You must choose a network"),
+  phone_number: Yup.number().required("Please provide your phone number"),
+  amount: Yup.number().required("Please enter amount"),
+});
