@@ -7,8 +7,6 @@ import handbugger from "../icon/handbugger.svg";
 import Context from "../store/context";
 import { Link } from "react-router-dom";
 
-type data = {};
-
 function Header() {
   const { open, setOpen, user } = useContext(Context);
   console.log(user);
