@@ -4,9 +4,6 @@ on:
   push:
     branches: 
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   FTP-Deploy-Action:
@@ -18,16 +15,10 @@ jobs:
         with: 
           fetch-depth: 2
           
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
       - name: FTP-Deploy-Action
         uses: SamKirkland/FTP-Deploy-Action@4.2.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-      - name: Deploy Website
-        run: npm run deploy
 
